@@ -1,8 +1,9 @@
-# AutoQuickTest (AQT) - Aplicación de Preguntas Tipo Test
+# AutoQuickTest (AQT) - 
+
+**Aplicación de Preguntas Tipo Test - ESPAÑOL (ESP)**
 
 **AutoQuickTest** es una aplicación en Python que permite cargar bases de datos de preguntas tipo test en formato Excel y realizar cuestionarios interactivos. La aplicación selecciona preguntas al azar, se adapta a tus errores para mejorar tu aprendizaje, y ofrece una interfaz gráfica intuitiva.
-
-**ESPAÑOL (ESP)** 
+ 
 
 ## Características
 
