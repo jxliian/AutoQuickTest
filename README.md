@@ -27,7 +27,7 @@ Antes de empezar, asegúrate de tener instalados:
 
 Sigue los pasos de más abajo para realizar la instalación.
 
-**Multiple-Choice App - English (ENG)**
+### Multiple-Choice App - English (ENG)**
 
 **AutoQuickTest** is a Python application that allows you to load multiple-choice question databases in Excel format and conduct interactive quizzes. The application randomly selects questions, adapts to your mistakes to improve learning, and offers an intuitive graphical interface.
 
