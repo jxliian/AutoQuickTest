@@ -1,11 +1,11 @@
 # AutoQuickTest (AQT) 
 
-**Aplicación de Preguntas Tipo Test - ESPAÑOL (ESP)**
+## **Aplicación de Preguntas Tipo Test - ESPAÑOL (ESP)**
 
 **AutoQuickTest** es una aplicación en Python que permite cargar bases de datos de preguntas tipo test en formato Excel y realizar cuestionarios interactivos. La aplicación selecciona preguntas al azar, se adapta a tus errores para mejorar tu aprendizaje, y ofrece una interfaz gráfica intuitiva.
  
 
-## Características
+### Características
 
 - **Cargar BBDD personalizadas**: Permite cargar cualquier archivo Excel con preguntas en el formato esperado.
 - **Adaptación inteligente**: Las preguntas que falles se repiten con más frecuencia para reforzar el aprendizaje.
@@ -14,7 +14,7 @@
 
 ---
 
-## Requisitos
+### Requisitos
 
 Antes de empezar, asegúrate de tener instalados:
 
@@ -23,22 +23,24 @@ Antes de empezar, asegúrate de tener instalados:
 
 ---
 
-## Instalación
+### Instalación
 
 Sigue los pasos de más abajo para realizar la instalación.
 
-### Multiple-Choice App - English (ENG)**
+---
+
+## **Multiple-Choice App - English (ENG)**
 
 **AutoQuickTest** is a Python application that allows you to load multiple-choice question databases in Excel format and conduct interactive quizzes. The application randomly selects questions, adapts to your mistakes to improve learning, and offers an intuitive graphical interface.
 
-## Characteristics
+### Characteristics
 
 - **Load custom databases**: Allows you to load any Excel file with questions in the expected format.
 - **Intelligent adaptation**: Questions you get wrong are repeated more frequently to reinforce learning.
 - **Graphical interface**: An interactive window where you can load and answer the questions.
 - **Scalable**: Supports databases of any size in the defined format.
 
-## Requirements
+### Requirements
 
 Before you start, make sure you have installed:
 
@@ -47,7 +49,7 @@ Before you start, make sure you have installed:
 
 ---
 
-## Installation
+### Installation
 
 Follow these steps to install and run the application:
 
@@ -69,7 +71,7 @@ Follow these steps to install and run the application:
 
 ---
 
-## Usage
+### Usage
 
 1. **Load your question database**: Open the application and load your Excel file with the questions.
 2. **Start the quiz**: Begin the quiz and answer the questions.
@@ -77,7 +79,7 @@ Follow these steps to install and run the application:
 
 ---
 
-## Contributing
+### Contributing
 
 If you want to contribute to this project, please follow these steps:
 
@@ -89,7 +91,6 @@ If you want to contribute to this project, please follow these steps:
 
 ---
 
-## License
+### License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
