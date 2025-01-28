@@ -2,20 +2,20 @@ import random
 import pandas as pd
 
 
-class Quiz:
-    def __init__(self, preguntas):
+class Quiz: # Clase Quiz
+    def __init__(self, preguntas): # Constructor
         self.preguntas = preguntas  # Lista de preguntas
         self.por_preguntar = preguntas.copy()  # Preguntas pendientes
         self.ya_preguntadas = []  # Preguntas respondidas correctamente
         self.falladas = {}  # Conteo de preguntas falladas
         
         
-    def siguiente_pregunta(self):
+    def siguiente_pregunta(self): # Método para obtener la siguiente pregunta
             """
-            Selecciona una pregunta, ponderada por los fallos.
-            """
-            if not self.por_preguntar:
-                return None  # No quedan preguntas por preguntar
+            Selecciona una pregunta, ponderada por los fallos. 
+            """ 
+            if not self.por_preguntar: # Si no quedan preguntas por preguntar
+                return None  # No quedan preguntas por preguntar 
             
             # Ponderar preguntas falladas
             preguntas_ponderadas = sorted(self.por_preguntar, key=lambda p: self.falladas.get(p['ID'], 0), reverse=True)
@@ -26,7 +26,7 @@ class Quiz:
         """
         Actualiza las listas según si la respuesta es correcta o no.
         """
-        if correcta:
+        if correcta: # Si la respuesta es correcta
             # Mover a ya preguntadas
             self.por_preguntar = [p for p in self.por_preguntar if p['ID'] != pregunta_id]
             self.ya_preguntadas.append(pregunta_id)

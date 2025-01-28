@@ -4,8 +4,8 @@ from tkinter import filedialog, messagebox
 from db_handler import cargar_preguntas
 from quiz_logic import Quiz
 
-class App:
-    def __init__(self, root):
+class App: # Clase App
+    def __init__(self, root): # Constructor
         self.root = root
         self.root.title("Test de Preguntas")
         self.quiz = None
@@ -45,17 +45,20 @@ class App:
                 self.opciones_var.set("")
                 for widget in self.opciones_frame.winfo_children():
                     widget.destroy()
-                for opcion in ['Opción A', 'Opción B', 'Opción C', 'Opción D', 'Opción E']:
+                for key in ['A', 'B', 'C', 'D', 'E']:
+                # Asegúrate de que el texto y el valor están bien asignados
+                    opcion_texto = pregunta['Opciones'].get(key, "Opción no disponible")  # Asegurarse de que la opción exista
                     tk.Radiobutton(
-                        self.opciones_frame, text=pregunta[opcion], variable=self.opciones_var, value=opcion[-1]
-                    ).pack(anchor="w")
+                        self.opciones_frame, text=opcion_texto, variable=self.opciones_var, value=key
+                    ).pack(anchor="w")  # El anchor="w" asegura que se alineen a la izquierda
+
             else:
                 messagebox.showinfo("Fin", "Has respondido todas las preguntas.")
 
     def validar_respuesta(self):
         seleccion = self.opciones_var.get()
         if seleccion:
-            correcta = seleccion == self.pregunta_actual['Correcta']
+            correcta = seleccion == self.pregunta_actual['Respuesta Correcta']
             self.quiz.registrar_respuesta(self.pregunta_actual['ID'], correcta)
             self.mostrar_siguiente_pregunta()
         else:
