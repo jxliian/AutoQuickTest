@@ -4,6 +4,8 @@ import pandas as pd
 
 class Quiz: # Clase Quiz
     def __init__(self, preguntas): # Constructor
+        self.respuestas = []  # Lista de respuestas
+        self.pregunta_actual = None  # Pregunta actual
         self.preguntas = preguntas  # Lista de preguntas
         self.por_preguntar = preguntas.copy()  # Preguntas pendientes
         self.ya_preguntadas = []  # Preguntas respondidas correctamente
