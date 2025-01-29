@@ -92,24 +92,29 @@ class App:
                 self.actualizar_indicadores()
 
     def validar_respuesta(self):
+    
         seleccion = self.opciones_var.get()
         if seleccion:
             # Verificar si la respuesta es correcta
             correcta = seleccion == self.pregunta_actual['Respuesta Correcta']
             
-            # Registrar la respuesta, correcta o incorrecta
+            # Registrar la respuesta correctamente
             self.quiz.registrar_respuesta(self.pregunta_actual['ID'], correcta)
             
-            # Almacenar la respuesta de la pregunta (correcta o incorrecta)
-            if correcta:
-                self.quiz.ya_preguntadas.append({'ID': self.pregunta_actual['ID'], 'acertada': True})
-            else:
+            # Solo agregar a 'ya_preguntadas' si la respuesta es correcta
+            if correcta and self.pregunta_actual['ID'] not in self.quiz.ya_preguntadas:
+                self.quiz.ya_preguntadas.append(self.pregunta_actual['ID'])  # Guardar solo el ID (entero)
+
+            # Si es incorrecta, actualizar 'falladas' correctamente sin sumar de más
+            if not correcta:
                 self.quiz.falladas[self.pregunta_actual['ID']] = self.quiz.falladas.get(self.pregunta_actual['ID'], 0) + 1
-            
-            # Mostrar la siguiente pregunta
+
+            # Actualizar UI y pasar a la siguiente pregunta
+            self.actualizar_indicadores()
             self.mostrar_siguiente_pregunta()
         else:
             messagebox.showwarning("Advertencia", "Selecciona una opción antes de continuar.")
+
 
 
     def reiniciar(self):
@@ -157,10 +162,10 @@ class App:
      if self.quiz:
          total_preguntas = len(self.quiz.preguntas)
          restantes = len(self.quiz.por_preguntar)
-         acertadas = len(self.quiz.ya_preguntadas)  # Respuestas correctas
-         falladas = len([p for p in self.quiz.falladas if p in self.quiz.ya_preguntadas])  # Respuestas incorrectas
+         acertadas = len(self.quiz.ya_preguntadas)  # Contamos solo las respondidas correctamente
+         falladas = sum(self.quiz.falladas.values())  # Suma todos los fallos, no solo las preguntas falladas una vez
          nota_media = self.calcular_nota_media()
-         pregunta_actual = self.quiz.pregunta_actual['ID'] if self.quiz.pregunta_actual else "0"
+         pregunta_actual = self.pregunta_actual['ID'] if hasattr(self, 'pregunta_actual') else "0"
 
          self.lbl_total_preguntas.config(text=f"Total: {total_preguntas}")
          self.lbl_restantes.config(text=f"Restantes: {restantes}")
@@ -170,11 +175,13 @@ class App:
          self.lbl_pregunta_actual.config(text=f"Pregunta actual: {pregunta_actual}")
 
     def calcular_nota_media(self):
-     total_preguntas = len(self.quiz.preguntas)
-     acertadas = len(self.quiz.ya_preguntadas)  # Solo preguntas correctas
-     if total_preguntas > 0:
-         return (acertadas / total_preguntas) * 10
-     return 0.0
+        total_intentos = sum(self.quiz.falladas.values()) + len(self.quiz.ya_preguntadas)  # Total de intentos hechos
+        acertadas = len(self.quiz.ya_preguntadas)  # Solo preguntas correctas
+
+        if total_intentos > 0:
+            return (acertadas / total_intentos) * 10  # Penaliza errores
+        return 0.0
+
 
 
 def main():

@@ -29,9 +29,12 @@ def cargar_preguntas(ruta_archivo):
                 'Respuesta Correcta': row['Respuesta_Correcta'] # Respuesta correcta
             }
             preguntas.append(pregunta) # Agregar la pregunta a la lista de preguntas
+            # Con esto ya hemos metido las preguntas en la lista preguntas
 
         print("Preguntas cargadas:", preguntas) # Imprimir las preguntas cargadas
         return preguntas # Devolver la lista de preguntas
+    
+    # Control de excepciones
     except FileNotFoundError:
         print(f"El archivo {ruta_archivo} no fue encontrado.")
         return []
