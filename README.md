@@ -3,15 +3,16 @@
 ## **Aplicación de Preguntas Tipo Test - ESPAÑOL (ESP)**
 
 **AutoQuickTest** es una aplicación en Python que permite cargar bases de datos de preguntas tipo test en formato Excel y realizar cuestionarios interactivos. La aplicación selecciona preguntas al azar, se adapta a tus errores para mejorar tu aprendizaje, y ofrece una interfaz gráfica intuitiva.
+
+### Cosas pendientes por implementar
+ **AutoQuickTest** actualmente se encuentra en una fase prematura, en la que su desarrollo esta pendiente. Faltan multitud de funcionalidades por añadir, pero la app ya puede ser usada para practicar con tus tipo-test.
+ Las funcionalidades que faltan son las siguientes:
  
-
-### Características
-
-- **Cargar BBDD personalizadas**: Permite cargar cualquier archivo Excel con preguntas en el formato esperado.
-- **Adaptación inteligente**: Las preguntas que falles se repiten con más frecuencia para reforzar el aprendizaje.
-- **Interfaz gráfica**: Una ventana interactiva donde puedes cargar las preguntas y responderlas.
-- **Escalable**: Admite bases de datos de cualquier tamaño en el formato definido.
-
+- **Cargar BBDD personalizadas (hecho)**: Permite cargar cualquier archivo Excel con preguntas en el formato esperado.
+- **Adaptación inteligente (en desarrollo)**: Las preguntas que falles se repiten con más frecuencia para reforzar el aprendizaje.
+- **Interfaz gráfica (en desarrollo)**: Una ventana interactiva donde puedes cargar las preguntas y responderlas.
+- **Escalable (en desarrollo)**: Admite bases de datos de cualquier tamaño en cualquier formato.
+ 
 ---
 
 ### Requisitos
