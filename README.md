@@ -1,4 +1,4 @@
-# AutoQuickTest (AQT) 
+# AutoQuickTest (AQT) - Pre-Alpha
 
 ## **Aplicación de Preguntas Tipo Test - ESPAÑOL (ESP)**
 
