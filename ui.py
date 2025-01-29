@@ -59,6 +59,11 @@ class App:
         self.lbl_pregunta_actual = tk.Label(self.indicadores_frame, text="Pregunta actual: 0")
         self.lbl_pregunta_actual.grid(row=3, column=0, columnspan=2, pady=5)
 
+        # Botón para cerrar la aplicación
+        self.btn_cerrar = tk.Button(root, text="Cerrar", command=self.cerrar_aplicacion, bg="red", fg="white")
+        self.btn_cerrar.pack(pady=10)
+
+
     def cargar_bbdd(self):
         ruta = filedialog.askopenfilename(filetypes=[("Archivos Excel", "*.xlsx")])
         preguntas = cargar_preguntas(ruta)
@@ -181,7 +186,9 @@ class App:
         if total_intentos > 0:
             return (acertadas / total_intentos) * 10  # Penaliza errores
         return 0.0
-
+    
+    def cerrar_aplicacion(self):
+        self.root.destroy()  # Cierra la ventana y finaliza la ejecución del programa
 
 
 def main():
