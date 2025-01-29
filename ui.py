@@ -3,11 +3,16 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from db_handler import cargar_preguntas
 from quiz_logic import Quiz
+from style import aplicar_estilos
 
 class App:
     def __init__(self, root):  # Constructor
         self.root = root
         self.root.title("Test de Preguntas")
+
+        # Aplicar estilos
+        aplicar_estilos()
+
         self.quiz = None
 
         # Botón para cargar la base de datos

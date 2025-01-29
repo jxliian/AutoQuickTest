@@ -1,0 +1,1 @@
+pyinstaller --onefile --windowed --icon=AQT.ico --name AQT main.py
