@@ -1,9 +1,9 @@
 
 Cosas por arreglar:
 
--Arreglar que fallos da doble
--Dar estilo a la app
--Añadir que pregunte de forma aleatoria
+-Arreglar que fallos da doble (en proceso)
+-Dar estilo a la app (ultimo)
+-Añadir que pregunte de forma aleatoria (hecho)
 -Añadir funcionalidad de vueltas, puedes dar vueltas a la bateria de preguntas
 - Que en cada vuelta se pregunte 1 vez mas las preguntas que mas fallaste
 (escalable, si son 100 preguntas, las 10 mas falladas, si 150, 20 mas falladas...)
