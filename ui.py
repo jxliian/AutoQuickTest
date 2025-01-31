@@ -4,6 +4,7 @@ from tkinter import filedialog, messagebox
 from db_handler import cargar_preguntas
 from quiz_logic import Quiz
 from style import aplicar_estilos
+import random
 
 class App:
     def __init__(self, root):  # Constructor
@@ -14,6 +15,13 @@ class App:
         aplicar_estilos()
 
         self.quiz = None
+
+        # Modo random variable
+        self.modo_random = tk.BooleanVar(value=False)  # Variable para seleccionar el modo
+
+        # Checkbox para modo aleatorio
+        self.chk_modo = tk.Checkbutton(root, text="Modo aleatorio", variable=self.modo_random)
+        self.chk_modo.pack(pady=5)
 
         # Botón para cargar la base de datos
         self.btn_cargar = tk.Button(root, text="Cargar BBDD", command=self.cargar_bbdd)
@@ -79,52 +87,58 @@ class App:
         else:
             messagebox.showerror("Error", "No se pudo cargar el archivo.")
 
+    def validar_respuesta(self):
+        seleccion = self.opciones_var.get()
+        if seleccion:
+            correcta = seleccion == self.pregunta_actual['Respuesta Correcta']
+            
+            # Registrar respuesta en el quiz
+            self.quiz.registrar_respuesta(self.pregunta_actual['ID'], correcta)
+            
+            if correcta:
+                if self.pregunta_actual['ID'] not in self.quiz.ya_preguntadas:
+                    self.quiz.ya_preguntadas.append(self.pregunta_actual['ID'])
+
+                # En modo aleatorio, eliminar la pregunta de la lista solo si es correcta
+                if self.modo_random.get() and self.pregunta_actual in self.quiz.por_preguntar:
+                    self.quiz.por_preguntar.remove(self.pregunta_actual)
+                
+                self.mostrar_siguiente_pregunta()  # Avanzar solo si aciertas
+            else:
+                self.quiz.falladas[self.pregunta_actual['ID']] = self.quiz.falladas.get(self.pregunta_actual['ID'], 0) + 1
+            
+            self.actualizar_indicadores()
+        else:
+            messagebox.showwarning("Advertencia", "Selecciona una opción antes de continuar.")
+
     def mostrar_siguiente_pregunta(self):
         if self.quiz:
-            pregunta = self.quiz.siguiente_pregunta()
-            if pregunta:
-                self.pregunta_actual = pregunta
-                self.pregunta_label.config(text=pregunta['Pregunta'])
+            if self.modo_random.get():
+                if self.quiz.por_preguntar:
+                    self.pregunta_actual = random.choice(self.quiz.por_preguntar)  # Elegir una pregunta aleatoria
+                else:
+                    messagebox.showinfo("Fin", "Has respondido todas las preguntas.")
+                    return
+            else:
+                self.pregunta_actual = self.quiz.siguiente_pregunta()
+            
+            if self.pregunta_actual:
+                self.pregunta_label.config(text=self.pregunta_actual['Pregunta'])
                 self.opciones_var.set("")
+                
+                # Limpiar opciones anteriores
                 for widget in self.opciones_frame.winfo_children():
                     widget.destroy()
+
+                # Mostrar nuevas opciones
                 for key in ['A', 'B', 'C', 'D', 'E']:
-                    opcion_texto = pregunta['Opciones'].get(key, "Opción no disponible")
+                    opcion_texto = self.pregunta_actual['Opciones'].get(key, "Opción no disponible")
                     tk.Radiobutton(
                         self.opciones_frame, text=opcion_texto, variable=self.opciones_var, value=key
                     ).pack(anchor="w")
 
                 # Actualizar indicadores
                 self.actualizar_indicadores()
-
-            else:
-                messagebox.showinfo("Fin", "Has respondido todas las preguntas.")
-                self.actualizar_indicadores()
-
-    def validar_respuesta(self):
-    
-        seleccion = self.opciones_var.get()
-        if seleccion:
-            # Verificar si la respuesta es correcta
-            correcta = seleccion == self.pregunta_actual['Respuesta Correcta']
-            
-            # Registrar la respuesta correctamente
-            self.quiz.registrar_respuesta(self.pregunta_actual['ID'], correcta)
-            
-            # Solo agregar a 'ya_preguntadas' si la respuesta es correcta
-            if correcta and self.pregunta_actual['ID'] not in self.quiz.ya_preguntadas:
-                self.quiz.ya_preguntadas.append(self.pregunta_actual['ID'])  # Guardar solo el ID (entero)
-
-            # Si es incorrecta, actualizar 'falladas' correctamente sin sumar de más
-            if not correcta:
-                self.quiz.falladas[self.pregunta_actual['ID']] = self.quiz.falladas.get(self.pregunta_actual['ID'], 0) + 1
-
-            # Actualizar UI y pasar a la siguiente pregunta
-            self.actualizar_indicadores()
-            self.mostrar_siguiente_pregunta()
-        else:
-            messagebox.showwarning("Advertencia", "Selecciona una opción antes de continuar.")
-
 
 
     def reiniciar(self):
@@ -133,6 +147,8 @@ class App:
         if self.quiz:
             # Restaurar las preguntas a las iniciales y vaciar las listas
             self.quiz.por_preguntar = self.quiz.preguntas.copy()  # Restablecer las preguntas pendientes
+            if self.modo_random.get():
+                random.shuffle(self.quiz.por_preguntar)
             self.quiz.ya_preguntadas = []  # Vaciar las preguntas respondidas
             self.quiz.falladas = {}  # Vaciar las preguntas falladas
             self.mostrar_siguiente_pregunta()  # Mostrar la primera pregunta
@@ -167,6 +183,12 @@ class App:
                 self.quiz.por_preguntar.pop(0)  # Eliminar la pregunta de la lista pendiente
                 self.mostrar_siguiente_pregunta()
 
+    # Me quedado por aqui no va el modo, cuando se pone en random no va
+    def pasar_pregunta_random(self):
+        if self.quiz:
+            if self.quiz.por_preguntar:
+                random.shuffle(self.quiz.por_preguntar)
+            self.mostrar_siguiente_pregunta()
 
     def actualizar_indicadores(self):
      if self.quiz:

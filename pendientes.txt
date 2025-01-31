@@ -1,0 +1,23 @@
+
+Cosas por arreglar:
+
+-Arreglar que fallos da doble
+-Dar estilo a la app
+-Añadir que pregunte de forma aleatoria
+-Añadir funcionalidad de vueltas, puedes dar vueltas a la bateria de preguntas
+- Que en cada vuelta se pregunte 1 vez mas las preguntas que mas fallaste
+(escalable, si son 100 preguntas, las 10 mas falladas, si 150, 20 mas falladas...)
+en la anterior vuelta
+- Añadir un cronometro de cuanto tiempo llevas en la sesion
+- Anadir nuevas stats, de cuanto tardas en completar el test, cuanto tardas de media en pregunta...
+y al terminar el test que te de un resumen
+
+- Anadir indicadores de vuelta actual/numero de vueltas total
+- Anadir sistema de sesiones, es decir que se guarde tu progreso (por donde vas) en sesiones, 
+y que puedas crear/destruir sesiones y entrar en ellas/salir.
+
+
+Funcionalidades extra-app-:
+
+-Ver implementacion de IA para que pueda leer cualquier base de datos pdf o script
+- PASAR DE PDF A EXCEL mirar repos a ver si sirven si no video de yt e intentar hacerlo yo
