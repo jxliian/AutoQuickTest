@@ -19,6 +19,13 @@ class App:
         # Modo random variable
         self.modo_random = tk.BooleanVar(value=False)  # Variable para seleccionar el modo
 
+        # Modo falladas variable
+        self.modo_falladas = tk.BooleanVar(value=False)
+
+        # Checkbox para modo falladas
+        self.chk_falladas = tk.Checkbutton(root, text="Modo falladas", variable=self.modo_falladas)
+        self.chk_falladas.pack(pady=5)
+
         # Checkbox para modo aleatorio
         self.chk_modo = tk.Checkbutton(root, text="Modo aleatorio", variable=self.modo_random)
         self.chk_modo.pack(pady=5)
@@ -125,6 +132,11 @@ class App:
 
                 if self.modo_random.get() and self.pregunta_actual in self.quiz.por_preguntar:
                     self.quiz.por_preguntar.remove(self.pregunta_actual)
+
+                if self.modo_falladas.get():
+                    # Eliminarla de falladas si ya estaba
+                    if self.pregunta_actual['ID'] in self.quiz.falladas:
+                        del self.quiz.falladas[self.pregunta_actual['ID']]
                 
                 self.mostrar_siguiente_pregunta()
             
@@ -134,48 +146,87 @@ class App:
 
 
 
+    # def mostrar_siguiente_pregunta(self):
+    #     if self.quiz:
+    #         if self.modo_random.get():
+    #             if self.quiz.por_preguntar:
+    #                 self.pregunta_actual = random.choice(self.quiz.por_preguntar)  # Elegir una pregunta aleatoria
+    #             else:
+    #                 messagebox.showinfo("Fin", "Has respondido todas las preguntas.")
+    #                 return
+    #         else:
+    #             self.pregunta_actual = self.quiz.siguiente_pregunta()
+            
+    #         if self.pregunta_actual:
+    #             self.pregunta_label.config(text=self.pregunta_actual['Pregunta'])
+    #             self.opciones_var.set("")
+                
+    #             # Limpiar opciones anteriores
+    #             for widget in self.opciones_frame.winfo_children():
+    #                 widget.destroy()
+
+    #             # Mostrar nuevas opciones
+    #             for key in ['A', 'B', 'C', 'D', 'E']:
+    #                 opcion_texto = self.pregunta_actual['Opciones'].get(key, "Opción no disponible")
+    #                 tk.Radiobutton(
+    #                     self.opciones_frame, text=opcion_texto, variable=self.opciones_var, value=key
+    #                 ).pack(anchor="w")
+
+    #             # Actualizar indicadores
+    #             self.actualizar_indicadores()
+
     def mostrar_siguiente_pregunta(self):
         if self.quiz:
-            if self.modo_random.get():
+            if self.modo_falladas.get():
+                falladas_ids = list(self.quiz.falladas.keys())
+                preguntas_falladas = [p for p in self.quiz.preguntas if p['ID'] in falladas_ids]
+
+                if preguntas_falladas:
+                    self.pregunta_actual = random.choice(preguntas_falladas)
+                else:
+                    messagebox.showinfo("Fin", "No hay preguntas falladas.")
+                    return
+
+            elif self.modo_random.get():
                 if self.quiz.por_preguntar:
-                    self.pregunta_actual = random.choice(self.quiz.por_preguntar)  # Elegir una pregunta aleatoria
+                    self.pregunta_actual = random.choice(self.quiz.por_preguntar)
                 else:
                     messagebox.showinfo("Fin", "Has respondido todas las preguntas.")
                     return
             else:
                 self.pregunta_actual = self.quiz.siguiente_pregunta()
-            
+
             if self.pregunta_actual:
                 self.pregunta_label.config(text=self.pregunta_actual['Pregunta'])
                 self.opciones_var.set("")
-                
-                # Limpiar opciones anteriores
+
                 for widget in self.opciones_frame.winfo_children():
                     widget.destroy()
 
-                # Mostrar nuevas opciones
                 for key in ['A', 'B', 'C', 'D', 'E']:
                     opcion_texto = self.pregunta_actual['Opciones'].get(key, "Opción no disponible")
                     tk.Radiobutton(
                         self.opciones_frame, text=opcion_texto, variable=self.opciones_var, value=key
                     ).pack(anchor="w")
 
-                # Actualizar indicadores
                 self.actualizar_indicadores()
 
 
     def reiniciar(self):
-    
-        # Reiniciar el cuestionario
         if self.quiz:
-            # Restaurar las preguntas a las iniciales y vaciar las listas
-            self.quiz.por_preguntar = self.quiz.preguntas.copy()  # Restablecer las preguntas pendientes
-            if self.modo_random.get():
-                random.shuffle(self.quiz.por_preguntar)
-            self.quiz.ya_preguntadas = []  # Vaciar las preguntas respondidas
-            self.quiz.falladas = {}  # Vaciar las preguntas falladas
-            self.mostrar_siguiente_pregunta()  # Mostrar la primera pregunta
-            self.actualizar_indicadores()  # Actualizar los indicadores
+            if self.modo_falladas.get():
+                # No reseteamos las falladas, porque el modo depende de ellas
+                pass
+            else:
+                self.quiz.por_preguntar = self.quiz.preguntas.copy()
+                if self.modo_random.get():
+                    random.shuffle(self.quiz.por_preguntar)
+                self.quiz.ya_preguntadas = []
+                self.quiz.falladas = {}
+
+            self.mostrar_siguiente_pregunta()
+            self.actualizar_indicadores()
+
 
 
     def ir_al_final(self):
@@ -213,21 +264,40 @@ class App:
                 random.shuffle(self.quiz.por_preguntar)
             self.mostrar_siguiente_pregunta()
 
-    def actualizar_indicadores(self):
-     if self.quiz:
-         total_preguntas = len(self.quiz.preguntas)
-         restantes = len(self.quiz.por_preguntar)
-         acertadas = len(self.quiz.ya_preguntadas)  # Contamos solo las respondidas correctamente
-         falladas = sum(self.quiz.falladas.values())  # Suma todos los fallos, no solo las preguntas falladas una vez
-         nota_media = self.calcular_nota_media()
-         pregunta_actual = self.pregunta_actual['ID'] if hasattr(self, 'pregunta_actual') else "0"
+    # def actualizar_indicadores(self):
+    #  if self.quiz:
+    #      total_preguntas = len(self.quiz.preguntas)
+    #      restantes = len(self.quiz.por_preguntar)
+    #      acertadas = len(self.quiz.ya_preguntadas)  # Contamos solo las respondidas correctamente
+    #      falladas = sum(self.quiz.falladas.values())  # Suma todos los fallos, no solo las preguntas falladas una vez
+    #      nota_media = self.calcular_nota_media()
+    #      pregunta_actual = self.pregunta_actual['ID'] if hasattr(self, 'pregunta_actual') else "0"
 
-         self.lbl_total_preguntas.config(text=f"Total: {total_preguntas}")
-         self.lbl_restantes.config(text=f"Restantes: {restantes}")
-         self.lbl_acertadas.config(text=f"Acertadas: {acertadas}")
-         self.lbl_falladas.config(text=f"Falladas: {falladas}")
-         self.lbl_nota_media.config(text=f"Nota media: {nota_media:.2f}")
-         self.lbl_pregunta_actual.config(text=f"Pregunta actual: {pregunta_actual}")
+    #      self.lbl_total_preguntas.config(text=f"Total: {total_preguntas}")
+    #      self.lbl_restantes.config(text=f"Restantes: {restantes}")
+    #      self.lbl_acertadas.config(text=f"Acertadas: {acertadas}")
+    #      self.lbl_falladas.config(text=f"Falladas: {falladas}")
+    #      self.lbl_nota_media.config(text=f"Nota media: {nota_media:.2f}")
+    #      self.lbl_pregunta_actual.config(text=f"Pregunta actual: {pregunta_actual}")
+
+    def actualizar_indicadores(self):
+        if self.quiz:
+            total_preguntas = len(self.quiz.preguntas)
+            restantes = len(self.quiz.por_preguntar)
+            acertadas = len(self.quiz.ya_preguntadas)
+            fallos_totales = sum(self.quiz.falladas.values())
+            preguntas_falladas = len(self.quiz.falladas)
+            nota_media = self.calcular_nota_media()
+            pregunta_actual = self.pregunta_actual['ID'] if hasattr(self, 'pregunta_actual') else "0"
+
+            self.lbl_total_preguntas.config(text=f"Total: {total_preguntas}")
+            self.lbl_restantes.config(text=f"Restantes: {restantes}")
+            self.lbl_acertadas.config(text=f"Acertadas: {acertadas}")
+            self.lbl_falladas.config(
+                text=f"Falladas: {fallos_totales} ({preguntas_falladas} preguntas diferentes)"
+            )
+            self.lbl_nota_media.config(text=f"Nota media: {nota_media:.2f}")
+            self.lbl_pregunta_actual.config(text=f"Pregunta actual: {pregunta_actual}")
 
     def calcular_nota_media(self):
         total_intentos = sum(self.quiz.falladas.values()) + len(self.quiz.ya_preguntadas)  # Total de intentos hechos
