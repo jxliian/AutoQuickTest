@@ -16,7 +16,7 @@ class App:
 
         # Cargar fondo y adaptar al tamaño de la ventana
         self.original_bg_image = Image.open("img/AutoQuickTest_carga.png")  # Cargar imagen de fondo
-        self.bg_image = ImageTk.PhotoImage(self.original_bg_image.resize((1280, 720)))  # tamaño inicial
+        self.bg_image = ImageTk.PhotoImage(self.original_bg_image.resize((1920, 1080)))  # tamaño inicial
 
         self.bg_label = tk.Label(self.root, image=self.bg_image)
         self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
