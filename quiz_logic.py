@@ -10,6 +10,9 @@ class Quiz: # Clase Quiz
         self.por_preguntar = preguntas.copy()  # Preguntas pendientes
         self.ya_preguntadas = []  # Preguntas respondidas correctamente
         self.falladas = {}  # Conteo de preguntas falladas
+        self.preguntas = preguntas
+        self.preguntas_actuales = []
+        self.indice_actual = 0
         
         
     def siguiente_pregunta(self): # Método para obtener la siguiente pregunta
@@ -35,3 +38,10 @@ class Quiz: # Clase Quiz
         else:
             # Incrementar contador de fallos
             self.falladas[pregunta_id] = self.falladas.get(pregunta_id, 0) + 1
+
+    def iniciar_modo(self, usar_random=False):
+            self.preguntas_actuales = self.preguntas[:]
+            if usar_random:
+                random.shuffle(self.preguntas_actuales)
+            self.indice_actual = 0
+
