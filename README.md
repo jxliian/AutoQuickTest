@@ -1,17 +1,22 @@
-# AutoQuickTest (AQT) Pre-Alpha
+# AutoQuickTest (AQT) - BETA V1.0 - Terminada
 
-## **Aplicación de Preguntas Tipo Test - ESPAÑOL (ESP)**
+<p align="center">
+  <img src="https://github.com/jxliian/AutoQuickTest/blob/main/img/presentacion.jpeg" >
+</p>
+
+
+## **Aplicación de Preguntas Tipo Test - ESPAÑOL (ESP) - Terminada**
 
 **AutoQuickTest** es una aplicación en Python que permite cargar bases de datos de preguntas tipo test en formato Excel y realizar cuestionarios interactivos. La aplicación selecciona preguntas al azar, se adapta a tus errores para mejorar tu aprendizaje, y ofrece una interfaz gráfica intuitiva.
 
 ### Cosas pendientes por implementar
- **AutoQuickTest** actualmente se encuentra en una fase prematura, en la que su desarrollo esta pendiente. Faltan multitud de funcionalidades por añadir, pero la app ya puede ser usada para practicar con tus tipo-test.
+ **AutoQuickTest** actualmente se encuentra en una fase Beta, en la que su desarrollo esta finalizado parcialmente debido a que pueda añadir más actualizaciones en el futuro. Mientras tanto, aunque faltan multitud de funcionalidades por añadir, la app ya puede ser usada para practicar con tus tipo-test.
  Las funcionalidades que faltan son las siguientes:
  
 - **Cargar BBDD personalizadas (hecho)**: Permite cargar cualquier archivo Excel con preguntas en el formato esperado.
-- **Adaptación inteligente (en desarrollo)**: Las preguntas que falles se repiten con más frecuencia para reforzar el aprendizaje.
-- **Interfaz gráfica (en desarrollo)**: Una ventana interactiva donde puedes cargar las preguntas y responderlas.
-- **Escalable (en desarrollo)**: Admite bases de datos de cualquier tamaño en cualquier formato.
+- **Adaptación inteligente (hecho)**: Las preguntas que falles se guardan, de manera que despues puedes acceder a un modo de solo preguntas falladas y practicar con ellas.
+- **Interfaz gráfica (hecho)**: Una ventana interactiva donde puedes cargar las preguntas y responderlas. (Pendiente de un GFX que se ofrezca a ayudar con los diseños)
+- **Escalable (en un futuro...?)**: Admite bases de datos de cualquier tamaño en cualquier formato a través de IA.
  
 ---
 
@@ -30,7 +35,24 @@ Sigue los pasos de más abajo para realizar la instalación.
 
 ---
 
-## **Multiple-Choice App - English (ENG)**
+### App Images
+
+<p align="center">
+  <img src="https://github.com/jxliian/AutoQuickTest/blob/main/img/aqt1.png" >
+</p>
+
+<p align="center">
+  <img src="https://github.com/jxliian/AutoQuickTest/blob/main/img/aqt2.png" >
+</p>
+
+<p align="center">
+  <img src="https://github.com/jxliian/AutoQuickTest/blob/main/img/aqt3.png" >
+</p>
+
+
+---
+
+## **Multiple-Choice App - English (ENG) - Finished**
 
 **AutoQuickTest** is a Python application that allows you to load multiple-choice question databases in Excel format and conduct interactive quizzes. The application randomly selects questions, adapts to your mistakes to improve learning, and offers an intuitive graphical interface.
 
