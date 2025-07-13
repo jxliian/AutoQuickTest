@@ -87,6 +87,30 @@ class App:
         else:
             messagebox.showerror("Error", "No se pudo cargar el archivo.")
 
+    # def validar_respuesta(self):
+    #     seleccion = self.opciones_var.get()
+    #     if seleccion:
+    #         correcta = seleccion == self.pregunta_actual['Respuesta Correcta']
+            
+    #         # Registrar respuesta en el quiz
+    #         self.quiz.registrar_respuesta(self.pregunta_actual['ID'], correcta)
+            
+    #         if correcta:
+    #             if self.pregunta_actual['ID'] not in self.quiz.ya_preguntadas:
+    #                 self.quiz.ya_preguntadas.append(self.pregunta_actual['ID'])
+
+    #             # En modo aleatorio, eliminar la pregunta de la lista solo si es correcta
+    #             if self.modo_random.get() and self.pregunta_actual in self.quiz.por_preguntar:
+    #                 self.quiz.por_preguntar.remove(self.pregunta_actual)
+                
+    #             self.mostrar_siguiente_pregunta()  # Avanzar solo si aciertas
+    #         else:
+    #             self.quiz.falladas[self.pregunta_actual['ID']] = self.quiz.falladas.get(self.pregunta_actual['ID'], 0) + 1
+            
+    #         self.actualizar_indicadores()
+    #     else:
+    #         messagebox.showwarning("Advertencia", "Selecciona una opción antes de continuar.")
+
     def validar_respuesta(self):
         seleccion = self.opciones_var.get()
         if seleccion:
@@ -99,17 +123,16 @@ class App:
                 if self.pregunta_actual['ID'] not in self.quiz.ya_preguntadas:
                     self.quiz.ya_preguntadas.append(self.pregunta_actual['ID'])
 
-                # En modo aleatorio, eliminar la pregunta de la lista solo si es correcta
                 if self.modo_random.get() and self.pregunta_actual in self.quiz.por_preguntar:
                     self.quiz.por_preguntar.remove(self.pregunta_actual)
                 
-                self.mostrar_siguiente_pregunta()  # Avanzar solo si aciertas
-            else:
-                self.quiz.falladas[self.pregunta_actual['ID']] = self.quiz.falladas.get(self.pregunta_actual['ID'], 0) + 1
+                self.mostrar_siguiente_pregunta()
             
             self.actualizar_indicadores()
         else:
             messagebox.showwarning("Advertencia", "Selecciona una opción antes de continuar.")
+
+
 
     def mostrar_siguiente_pregunta(self):
         if self.quiz:
