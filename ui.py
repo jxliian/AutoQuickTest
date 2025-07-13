@@ -48,7 +48,6 @@ class App:
         self.btn_modo_normal.pack(pady=20)
         self.btn_modo_aleatorio.pack(pady=20)
 
-
         # Aplicar estilos
         aplicar_estilos()
 
